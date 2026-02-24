@@ -13,9 +13,21 @@ class MainWindow(ctk.CTk):
         self.maximize_window()
         self.set_app_icon()
 
+        self.top_bar = ctk.CTkFrame(self, fg_color="transparent")
+        self.top_bar.pack(fill="x", padx=10, pady=(8, 0))
+
+        self.activation_label = ctk.CTkLabel(
+            self.top_bar,
+            text="Produto ativado",
+            font=("Arial", 12, "bold"),
+            text_color="#16A34A",
+        )
+        self.activation_label.pack(side="right")
+
         self.main_area = ctk.CTkFrame(self)
         self.main_area.pack(fill="both", expand=True)
 
+        self.update_license_status(self.license_active)
         self.show_receipt()
 
     def clear(self):
@@ -25,6 +37,13 @@ class MainWindow(ctk.CTk):
     def show_receipt(self):
         self.clear()
         ReceiptView(self.main_area)
+
+    def update_license_status(self, is_active):
+        self.license_active = bool(is_active)
+        if self.license_active:
+            self.activation_label.pack(side="right")
+        else:
+            self.activation_label.pack_forget()
 
     def set_app_icon(self):
         icon_path = get_asset_path("icone.ico")

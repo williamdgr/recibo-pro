@@ -29,7 +29,7 @@ if __name__ == "__main__":
         except Exception:
             pass
 
-        app.license_active = True
+        app.update_license_status(True)
         app.deiconify()
         app.maximize_window()
         app.after(50, app.maximize_window)
